@@ -10,4 +10,5 @@ public class PhongCreateRequest {
     private Double area;
     private Double price;
     private RoomStatus status;
+    private String imageUrl;
 }

@@ -28,5 +28,8 @@ public class Phong {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
+
+    @Column(name = "imageUrl")
+    private String imageUrl;
 }
 

@@ -20,4 +20,12 @@ public class BaoTri {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "description")
+    private String description;
+
+    //Khóa ngoại tới Phong
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Phong room;
+
 }

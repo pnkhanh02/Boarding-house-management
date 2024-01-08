@@ -1,13 +1,21 @@
 package com.example.boardinghousemanagementbackend.service.impl;
 
 import com.example.boardinghousemanagementbackend.modal.dto.TaiKhoanCreateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.TaiKhoanSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.TaiKhoanUpdateRequest;
 import com.example.boardinghousemanagementbackend.modal.entity.HopDong;
+import com.example.boardinghousemanagementbackend.modal.entity.Phong;
 import com.example.boardinghousemanagementbackend.modal.entity.TaiKhoan;
 import com.example.boardinghousemanagementbackend.repository.TaiKhoanRepository;
+import com.example.boardinghousemanagementbackend.repository.specification.PhongSpecification;
+import com.example.boardinghousemanagementbackend.repository.specification.TaiKhoanSpecification;
 import com.example.boardinghousemanagementbackend.service.ITaiKhoanService;
+import com.example.boardinghousemanagementbackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +29,13 @@ public class TaiKhoanService implements ITaiKhoanService {
     @Override
     public List<TaiKhoan> getAll() {
         return taiKhoanRepository.findAll();
+    }
+
+    @Override
+    public Page<TaiKhoan> search(TaiKhoanSearchRequest request) {
+        PageRequest pageRequest = Utils.buildPageRequest(request);
+        Specification<TaiKhoan> specification = TaiKhoanSpecification.buildCondition(request);
+        return taiKhoanRepository.findAll(specification, pageRequest);
     }
 
     @Override

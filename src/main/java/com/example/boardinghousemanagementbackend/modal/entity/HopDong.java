@@ -23,4 +23,9 @@ public class HopDong {
 
     @Column(name = "numOfPeople", nullable = false)
     private Integer numOfPeople;
+
+    //Khóa ngoại tới Phong
+    @OneToOne
+    @JoinColumn(name = "room_id")
+    private Phong room;
 }

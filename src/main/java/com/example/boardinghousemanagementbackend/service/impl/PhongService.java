@@ -1,13 +1,19 @@
 package com.example.boardinghousemanagementbackend.service.impl;
 
 import com.example.boardinghousemanagementbackend.modal.dto.PhongCreateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.PhongSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.PhongUpdateRequest;
 import com.example.boardinghousemanagementbackend.modal.entity.HopDong;
 import com.example.boardinghousemanagementbackend.modal.entity.Phong;
 import com.example.boardinghousemanagementbackend.repository.PhongRepository;
+import com.example.boardinghousemanagementbackend.repository.specification.PhongSpecification;
 import com.example.boardinghousemanagementbackend.service.IPhongService;
+import com.example.boardinghousemanagementbackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +27,13 @@ public class PhongService implements IPhongService {
     @Override
     public List<Phong> getAll() {
         return phongRepository.findAll();
+    }
+
+    @Override
+    public Page<Phong> search(PhongSearchRequest request) {
+        PageRequest pageRequest = Utils.buildPageRequest(request);
+        Specification<Phong> specification = PhongSpecification.buildCondition(request);
+        return phongRepository.findAll(specification, pageRequest);
     }
 
     @Override

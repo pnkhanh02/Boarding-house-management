@@ -1,14 +1,13 @@
 package com.example.boardinghousemanagementbackend.controller;
 
-import com.example.boardinghousemanagementbackend.modal.dto.HopDongCreateRequest;
-import com.example.boardinghousemanagementbackend.modal.dto.HopDongUpdateRequest;
-import com.example.boardinghousemanagementbackend.modal.dto.TaiKhoanCreateRequest;
-import com.example.boardinghousemanagementbackend.modal.dto.TaiKhoanUpdateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.*;
 import com.example.boardinghousemanagementbackend.modal.entity.HopDong;
+import com.example.boardinghousemanagementbackend.modal.entity.Phong;
 import com.example.boardinghousemanagementbackend.modal.entity.TaiKhoan;
 import com.example.boardinghousemanagementbackend.service.IHopDongService;
 import com.example.boardinghousemanagementbackend.service.ITaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +21,11 @@ public class TaiKhoanController {
     @GetMapping("/getAll")
     public List<TaiKhoan> getAll(){
         return taiKhoanService.getAll();
+    }
+
+    @PostMapping("/search")
+    public Page<TaiKhoan> search(@RequestBody TaiKhoanSearchRequest request){
+        return taiKhoanService.search(request);
     }
 
     @GetMapping("/{id}")

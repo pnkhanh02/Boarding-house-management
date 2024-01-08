@@ -1,16 +1,19 @@
 package com.example.boardinghousemanagementbackend.controller;
 
 import com.example.boardinghousemanagementbackend.modal.dto.PhongCreateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.PhongSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.PhongUpdateRequest;
 import com.example.boardinghousemanagementbackend.modal.entity.Phong;
 import com.example.boardinghousemanagementbackend.service.IPhongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/phong")
+@CrossOrigin("*")
 public class PhongController {
     @Autowired
     private IPhongService phongService;
@@ -19,6 +22,12 @@ public class PhongController {
     public List<Phong> getAll(){
         return phongService.getAll();
     }
+
+    @PostMapping("/search")
+    public Page<Phong> search(@RequestBody PhongSearchRequest request){
+        return phongService.search(request);
+    }
+
 
     @GetMapping("/{id}")
     public Phong getById(@PathVariable long id){

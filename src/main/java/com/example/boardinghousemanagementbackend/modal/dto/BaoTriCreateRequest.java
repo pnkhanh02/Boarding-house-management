@@ -8,4 +8,7 @@ import java.time.LocalDate;
 public class BaoTriCreateRequest {
     private LocalDate maintenanceDate;
     private Double price;
+    private String description;
+
+    private Long phongId;
 }

@@ -7,4 +7,6 @@ public class YeuCauCreateRequest {
     private String name;
     private String phone;
     private String description;
+
+    private Long phongId;
 }

@@ -10,4 +10,6 @@ public class HopDongUpdateRequest {
     private String name;
     private LocalDate deadline;
     private Integer numOfPeople;
+
+    private Long phongId;
 }

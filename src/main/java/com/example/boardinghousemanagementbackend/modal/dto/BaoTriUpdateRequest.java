@@ -9,4 +9,7 @@ public class BaoTriUpdateRequest {
     private Long id;
     private LocalDate maintenanceDate;
     private Double price;
+    private String description;
+
+    private Long phongId;
 }

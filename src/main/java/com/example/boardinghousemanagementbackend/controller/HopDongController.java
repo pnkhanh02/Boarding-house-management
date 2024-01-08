@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/hopdong")
+@CrossOrigin("*")
 public class HopDongController {
     @Autowired
     private IHopDongService hopDongService;
