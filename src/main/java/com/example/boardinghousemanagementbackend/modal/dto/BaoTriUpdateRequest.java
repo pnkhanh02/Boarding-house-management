@@ -6,10 +6,10 @@ import java.time.LocalDate;
 
 @Data
 public class BaoTriUpdateRequest {
-    private Long id;
+    private long id;
     private LocalDate maintenanceDate;
     private Double price;
     private String description;
 
-    private Long phongId;
+    private long roomId;
 }

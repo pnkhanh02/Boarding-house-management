@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class YeuCauCreateRequest {
-    private String name;
+    private String title;
     private String phone;
     private String description;
 
-    private Long phongId;
+    private long roomId;
 }

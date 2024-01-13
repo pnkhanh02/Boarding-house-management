@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface YeuCauRepository extends JpaRepository<YeuCau, Long>, JpaSpecificationExecutor<YeuCau> {
+    YeuCau findByRoomId(long roomId);
+    YeuCau findById(long id);
 }

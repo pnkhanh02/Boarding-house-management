@@ -29,7 +29,7 @@ public class Phong {
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
 
-    @Column(name = "imageUrl")
+    @Column(name = "imageUrl", length = 500)
     private String imageUrl;
 }
 

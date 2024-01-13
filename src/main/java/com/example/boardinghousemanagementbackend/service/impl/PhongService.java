@@ -5,6 +5,7 @@ import com.example.boardinghousemanagementbackend.modal.dto.PhongSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.PhongUpdateRequest;
 import com.example.boardinghousemanagementbackend.modal.entity.HopDong;
 import com.example.boardinghousemanagementbackend.modal.entity.Phong;
+import com.example.boardinghousemanagementbackend.repository.HopDongRepository;
 import com.example.boardinghousemanagementbackend.repository.PhongRepository;
 import com.example.boardinghousemanagementbackend.repository.specification.PhongSpecification;
 import com.example.boardinghousemanagementbackend.service.IPhongService;
@@ -22,6 +23,9 @@ import java.util.Optional;
 @Service
 public class PhongService implements IPhongService {
     @Autowired
+    HopDongRepository hopDongRepository;
+
+    @Autowired
     private PhongRepository phongRepository;
 
     @Override
@@ -38,8 +42,8 @@ public class PhongService implements IPhongService {
 
     @Override
     public Phong getById(long id) {
-        Optional<Phong> optionalPhong = phongRepository.findById(id);
-        if(optionalPhong.isPresent()){
+        Optional<Phong> optionalPhong = phongRepository.findById((Long) id);
+        if (optionalPhong.isPresent()) {
             return optionalPhong.get();
         }
         return null;
@@ -47,6 +51,10 @@ public class PhongService implements IPhongService {
 
     @Override
     public void delete(long id) {
+        HopDong hopDong = hopDongRepository.findByRoomId(id);
+        if (hopDong != null) {
+            hopDongRepository.delete(hopDong);
+        }
         phongRepository.deleteById(id);
     }
 
@@ -60,7 +68,7 @@ public class PhongService implements IPhongService {
     @Override
     public Phong update(PhongUpdateRequest request) {
         Phong phong = getById(request.getId());
-        if(phong != null){
+        if (phong != null) {
             BeanUtils.copyProperties(request, phong);
             return phongRepository.save(phong);
         }

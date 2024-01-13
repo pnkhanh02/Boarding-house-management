@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class YeuCauUpdateRequest {
-    private Long id;
-    private String name;
+    private long id;
+    private String title;
     private String phone;
     private String description;
 
-    private Long phongId;
+    private long roomId;
 }

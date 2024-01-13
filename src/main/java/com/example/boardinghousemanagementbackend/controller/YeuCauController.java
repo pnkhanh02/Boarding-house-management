@@ -1,17 +1,22 @@
 package com.example.boardinghousemanagementbackend.controller;
 
+import com.example.boardinghousemanagementbackend.modal.dto.HopDongSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.YeuCauCreateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.YeuCauSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.YeuCauUpdateRequest;
+import com.example.boardinghousemanagementbackend.modal.entity.HopDong;
 import com.example.boardinghousemanagementbackend.modal.entity.YeuCau;
 import com.example.boardinghousemanagementbackend.service.IYeuCauService;
 import com.example.boardinghousemanagementbackend.service.impl.YeuCauService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/yeucau")
+@CrossOrigin("*")
 public class YeuCauController {
     @Autowired
     private IYeuCauService yeuCauService;
@@ -19,6 +24,11 @@ public class YeuCauController {
     @GetMapping("/getAll")
     public List<YeuCau> getAll(){
         return yeuCauService.getAll();
+    }
+
+    @PostMapping("/search")
+    public Page<YeuCau> search(@RequestBody YeuCauSearchRequest request){
+        return yeuCauService.search(request);
     }
 
     @GetMapping("/{id}")

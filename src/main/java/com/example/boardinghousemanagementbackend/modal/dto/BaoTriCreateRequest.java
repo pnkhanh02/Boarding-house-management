@@ -10,5 +10,5 @@ public class BaoTriCreateRequest {
     private Double price;
     private String description;
 
-    private Long phongId;
+    private long roomId;
 }

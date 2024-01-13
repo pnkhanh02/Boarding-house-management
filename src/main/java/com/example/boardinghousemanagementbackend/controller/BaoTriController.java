@@ -1,20 +1,21 @@
 package com.example.boardinghousemanagementbackend.controller;
 
-import com.example.boardinghousemanagementbackend.modal.dto.BaoTriCreateRequest;
-import com.example.boardinghousemanagementbackend.modal.dto.BaoTriUpdateRequest;
-import com.example.boardinghousemanagementbackend.modal.dto.HopDongCreateRequest;
-import com.example.boardinghousemanagementbackend.modal.dto.HopDongUpdateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.*;
 import com.example.boardinghousemanagementbackend.modal.entity.BaoTri;
 import com.example.boardinghousemanagementbackend.modal.entity.HopDong;
+import com.example.boardinghousemanagementbackend.modal.entity.YeuCau;
 import com.example.boardinghousemanagementbackend.service.IBaoTriService;
 import com.example.boardinghousemanagementbackend.service.impl.BaoTriService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/baotri")
+@CrossOrigin("*")
 public class BaoTriController {
     @Autowired
     private IBaoTriService baoTriService;
@@ -22,6 +23,11 @@ public class BaoTriController {
     @GetMapping("/getAll")
     public List<BaoTri> getAll(){
         return baoTriService.getAll();
+    }
+
+    @PostMapping("/search")
+    public Page<BaoTri> search(@RequestBody BaoTriSearchRequest request){
+        return baoTriService.search(request);
     }
 
     @GetMapping("/{id}")
@@ -43,4 +49,10 @@ public class BaoTriController {
     public BaoTri update(@RequestBody BaoTriUpdateRequest request){
         return baoTriService.update(request);
     }
+
+//    @GetMapping(value = "/{date}")
+//    public List<BaoTri> searchV2 (@PathVariable String date){
+//        return baoTriService.searchV2(date);
+//    }
+
 }

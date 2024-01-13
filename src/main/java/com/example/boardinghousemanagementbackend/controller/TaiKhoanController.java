@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/taikhoan")
+@CrossOrigin("*")
 public class TaiKhoanController {
     @Autowired
     private ITaiKhoanService taiKhoanService;

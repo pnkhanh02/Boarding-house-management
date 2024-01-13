@@ -2,13 +2,22 @@ package com.example.boardinghousemanagementbackend.service.impl;
 
 
 import com.example.boardinghousemanagementbackend.modal.dto.YeuCauCreateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.YeuCauSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.YeuCauUpdateRequest;
+import com.example.boardinghousemanagementbackend.modal.entity.Phong;
 import com.example.boardinghousemanagementbackend.modal.entity.YeuCau;
+import com.example.boardinghousemanagementbackend.repository.PhongRepository;
 import com.example.boardinghousemanagementbackend.repository.YeuCauRepository;
+import com.example.boardinghousemanagementbackend.repository.specification.PhongSpecification;
+import com.example.boardinghousemanagementbackend.repository.specification.YeuCauSpecification;
 import com.example.boardinghousemanagementbackend.service.IYeuCauService;
+import com.example.boardinghousemanagementbackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,13 +28,23 @@ public class YeuCauService implements IYeuCauService {
     @Autowired
     private YeuCauRepository yeuCauRepository;
 
+    @Autowired
+    private PhongRepository phongRepository;
+
     @Override
     public List<YeuCau> getAll() {
         return yeuCauRepository.findAll();
     }
 
     @Override
-    public YeuCau getById(long id) {
+    public Page<YeuCau> search(YeuCauSearchRequest request) {
+        PageRequest pageRequest = Utils.buildPageRequest(request);
+        Specification<YeuCau> specification = YeuCauSpecification.buildCondition(request);
+        return yeuCauRepository.findAll(specification, pageRequest);
+    }
+
+    @Override
+    public YeuCau getById(Long id) {
         Optional<YeuCau> optionalYeuCau = yeuCauRepository.findById(id);
         if(optionalYeuCau.isPresent()){
             return optionalYeuCau.get();
@@ -41,17 +60,22 @@ public class YeuCauService implements IYeuCauService {
     @Override
     public YeuCau create(YeuCauCreateRequest request) {
         YeuCau yeuCau = new YeuCau();
-        BeanUtils.copyProperties(request, yeuCau);
-        return yeuCauRepository.save(yeuCau);
+        yeuCau.setTitle(request.getTitle());
+        yeuCau.setDescription(request.getDescription());
+        yeuCau.setPhone(request.getPhone());
+        yeuCau.setRoom(phongRepository.findById(request.getRoomId()));
+        yeuCauRepository.save(yeuCau);
+        return yeuCau;
     }
 
     @Override
     public YeuCau update(YeuCauUpdateRequest request) {
-        YeuCau yeuCau = getById(request.getId());
-        if(yeuCau != null){
-            BeanUtils.copyProperties(request, yeuCau);
-            return yeuCauRepository.save(yeuCau);
-        }
-        return null;
+        YeuCau yeuCau = yeuCauRepository.findById(request.getId());
+        yeuCau.setTitle(request.getTitle());
+        yeuCau.setDescription(request.getDescription());
+        yeuCau.setPhone(request.getPhone());
+        yeuCau.setRoom(phongRepository.findById(request.getRoomId()));
+        yeuCauRepository.save(yeuCau);
+        return yeuCau;
     }
 }

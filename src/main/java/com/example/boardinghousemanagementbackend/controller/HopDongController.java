@@ -1,11 +1,15 @@
 package com.example.boardinghousemanagementbackend.controller;
 
 import com.example.boardinghousemanagementbackend.modal.dto.HopDongCreateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.HopDongSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.HopDongUpdateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.PhongSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.entity.HopDong;
+import com.example.boardinghousemanagementbackend.modal.entity.Phong;
 import com.example.boardinghousemanagementbackend.service.IHopDongService;
 import com.example.boardinghousemanagementbackend.service.impl.HopDongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +24,11 @@ public class HopDongController {
     @GetMapping("/getAll")
     public List<HopDong> getAll(){
         return hopDongService.getAll();
+    }
+
+    @PostMapping("/search")
+    public Page<HopDong> search(@RequestBody HopDongSearchRequest request){
+        return hopDongService.search(request);
     }
 
     @GetMapping("/{id}")
