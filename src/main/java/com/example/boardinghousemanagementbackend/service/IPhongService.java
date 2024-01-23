@@ -12,6 +12,8 @@ public interface IPhongService {
 
     Page<Phong> search(PhongSearchRequest request);
 
+    int getNumberOfPhong();
+
     Phong getById(long id);
 
     void delete(long id);

@@ -15,6 +15,8 @@ public interface IHopDongService {
 
     Page<HopDong> search(HopDongSearchRequest request);
 
+    int getNumberOfHopDong();
+
     HopDong getById(Long id);
 
     void delete(long id);

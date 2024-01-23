@@ -5,6 +5,8 @@ import com.example.boardinghousemanagementbackend.modal.dto.BinhLuanUpdateReques
 import com.example.boardinghousemanagementbackend.modal.entity.BaoTri;
 import com.example.boardinghousemanagementbackend.modal.entity.BinhLuan;
 import com.example.boardinghousemanagementbackend.repository.BinhLuanRepository;
+import com.example.boardinghousemanagementbackend.repository.PhongRepository;
+import com.example.boardinghousemanagementbackend.repository.TaiKhoanRepository;
 import com.example.boardinghousemanagementbackend.service.IBinhLuanService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,12 @@ import java.util.Optional;
 public class BinhLuanService implements IBinhLuanService {
     @Autowired
     private BinhLuanRepository binhLuanRepository;
+
+    @Autowired
+    private PhongRepository phongRepository;
+
+    @Autowired
+    private TaiKhoanRepository taiKhoanRepository;
 
     @Override
     public List<BinhLuan> getAll() {
@@ -40,8 +48,11 @@ public class BinhLuanService implements IBinhLuanService {
     @Override
     public BinhLuan create(BinhLuanCreateRequest request) {
         BinhLuan binhLuan = new BinhLuan();
-        BeanUtils.copyProperties(request, binhLuan);
-        return binhLuanRepository.save(binhLuan);
+        binhLuan.setAccount(taiKhoanRepository.findById(request.getAccountId()));
+        binhLuan.setRoom(phongRepository.findById(request.getRoomId()));
+        binhLuan.setContent(request.getContent());
+        binhLuanRepository.save(binhLuan);
+        return binhLuan;
     }
 
     @Override

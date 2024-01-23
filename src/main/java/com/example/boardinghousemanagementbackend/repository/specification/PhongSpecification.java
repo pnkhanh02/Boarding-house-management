@@ -43,7 +43,7 @@ public class PhongSpecification {
             return (root, query, cri) -> {
                 // root: Chọn cột, field, để tìm kiếm (giá trị là thuộc tính trong java)
                 // cri: CriteriaBuilder Khai báo loại so sánh dữ liệu. ( lớn hơn, nhỏ hơn, equal, like,.... )
-                return cri.equal(root.get("area"), "%" + request.getArea() + "%");
+                return cri.equal(root.get("area"),  request.getArea() );
             };
         }
         return null;
@@ -55,7 +55,7 @@ public class PhongSpecification {
             return (root, query, cri) -> {
                 // root: Chọn cột, field, để tìm kiếm (giá trị là thuộc tính trong java)
                 // cri: CriteriaBuilder Khai báo loại so sánh dữ liệu. ( lớn hơn, nhỏ hơn, equal, like,.... )
-                return cri.equal(root.get("price"), "%" + request.getPrice() + "%");
+                return cri.equal(root.get("price"), request.getPrice() );
             };
         }
         return null;

@@ -41,6 +41,11 @@ public class PhongService implements IPhongService {
     }
 
     @Override
+    public int getNumberOfPhong() {
+        return phongRepository.findAll().size();
+    }
+
+    @Override
     public Phong getById(long id) {
         Optional<Phong> optionalPhong = phongRepository.findById((Long) id);
         if (optionalPhong.isPresent()) {

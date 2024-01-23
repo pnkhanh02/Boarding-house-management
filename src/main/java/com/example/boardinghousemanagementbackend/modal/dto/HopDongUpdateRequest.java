@@ -8,7 +8,8 @@ import java.time.LocalDate;
 public class HopDongUpdateRequest {
     private long id;
     private String name;
-    private LocalDate deadline;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Integer numOfPeople;
 
     private long roomId;

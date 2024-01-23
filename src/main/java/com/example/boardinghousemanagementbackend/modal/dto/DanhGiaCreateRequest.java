@@ -5,5 +5,8 @@ import lombok.Data;
 
 @Data
 public class DanhGiaCreateRequest {
-    private Rating rating;
+    private int rating;
+
+    private long roomId;
+    private long accountId;
 }

@@ -2,9 +2,10 @@ package com.example.boardinghousemanagementbackend.service.impl;
 
 import com.example.boardinghousemanagementbackend.modal.dto.DanhGiaCreateRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.DanhGiaUpdateRequest;
-import com.example.boardinghousemanagementbackend.modal.entity.BinhLuan;
 import com.example.boardinghousemanagementbackend.modal.entity.DanhGia;
 import com.example.boardinghousemanagementbackend.repository.DanhGiaRepository;
+import com.example.boardinghousemanagementbackend.repository.PhongRepository;
+import com.example.boardinghousemanagementbackend.repository.TaiKhoanRepository;
 import com.example.boardinghousemanagementbackend.service.IDanhGiaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ import java.util.Optional;
 public class DanhGiaService implements IDanhGiaService {
     @Autowired
     private DanhGiaRepository danhGiaRepository;
+    @Autowired
+    private PhongRepository phongRepository;
+    @Autowired
+    private TaiKhoanRepository taiKhoanRepository;
 
     @Override
     public List<DanhGia> getAll() {
@@ -26,7 +31,7 @@ public class DanhGiaService implements IDanhGiaService {
     @Override
     public DanhGia getById(long id) {
         Optional<DanhGia> optionalDanhGia = danhGiaRepository.findById(id);
-        if(optionalDanhGia.isPresent()){
+        if (optionalDanhGia.isPresent()) {
             return optionalDanhGia.get();
         }
         return null;
@@ -40,14 +45,17 @@ public class DanhGiaService implements IDanhGiaService {
     @Override
     public DanhGia create(DanhGiaCreateRequest request) {
         DanhGia danhGia = new DanhGia();
-        BeanUtils.copyProperties(request, danhGia);
-        return danhGiaRepository.save(danhGia);
+        danhGia.setAccount(taiKhoanRepository.findById(request.getAccountId()));
+        danhGia.setRoom(phongRepository.findById(request.getRoomId()));
+        danhGia.setRating(request.getRating());
+       danhGiaRepository.save(danhGia);
+       return  danhGia;
     }
 
     @Override
     public DanhGia update(DanhGiaUpdateRequest request) {
         DanhGia danhGia = getById(request.getId());
-        if(danhGia != null){
+        if (danhGia != null) {
             BeanUtils.copyProperties(request, danhGia);
             return danhGiaRepository.save(danhGia);
         }

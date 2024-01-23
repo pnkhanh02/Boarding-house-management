@@ -13,7 +13,9 @@ public interface ITaiKhoanService {
 
     Page<TaiKhoan> search(TaiKhoanSearchRequest request);
 
-    TaiKhoan getById(long id);
+    int getNumberOfTaiKhoan();
+
+    TaiKhoan getById(Long id);
 
     void delete(long id);
 

@@ -45,6 +45,11 @@ public class BaoTriService implements IBaoTriService {
     }
 
     @Override
+    public int getNumberOfBaoTri() {
+        return baoTriRepository.findAll().size();
+    }
+
+    @Override
     public BaoTri getById(Long id) {
         Optional<BaoTri> optionalBaoTri = baoTriRepository.findById(id);
         if(optionalBaoTri.isPresent()){

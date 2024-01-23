@@ -14,6 +14,8 @@ public interface IBaoTriService {
 
     Page<BaoTri> search(BaoTriSearchRequest request);
 
+    int getNumberOfBaoTri();
+
     BaoTri getById(Long id);
 
     void delete(long id);
@@ -22,5 +24,4 @@ public interface IBaoTriService {
 
     BaoTri update(BaoTriUpdateRequest request);
 
-//    List<BaoTri> searchV2(String localDate);
 }

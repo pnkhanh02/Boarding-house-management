@@ -7,4 +7,7 @@ import lombok.Data;
 public class DanhGiaUpdateRequest {
     private Long id;
     private Rating rating;
+
+    private long roomId;
+    private long accountId;
 }

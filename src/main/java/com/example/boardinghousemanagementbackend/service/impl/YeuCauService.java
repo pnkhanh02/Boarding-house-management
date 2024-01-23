@@ -4,17 +4,13 @@ package com.example.boardinghousemanagementbackend.service.impl;
 import com.example.boardinghousemanagementbackend.modal.dto.YeuCauCreateRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.YeuCauSearchRequest;
 import com.example.boardinghousemanagementbackend.modal.dto.YeuCauUpdateRequest;
-import com.example.boardinghousemanagementbackend.modal.entity.Phong;
 import com.example.boardinghousemanagementbackend.modal.entity.YeuCau;
 import com.example.boardinghousemanagementbackend.repository.PhongRepository;
 import com.example.boardinghousemanagementbackend.repository.YeuCauRepository;
-import com.example.boardinghousemanagementbackend.repository.specification.PhongSpecification;
 import com.example.boardinghousemanagementbackend.repository.specification.YeuCauSpecification;
 import com.example.boardinghousemanagementbackend.service.IYeuCauService;
 import com.example.boardinghousemanagementbackend.utils.Utils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -44,9 +40,15 @@ public class YeuCauService implements IYeuCauService {
     }
 
     @Override
+    public int getNumberOfYeuCau() {
+
+        return yeuCauRepository.findAll().size();
+    }
+
+    @Override
     public YeuCau getById(Long id) {
         Optional<YeuCau> optionalYeuCau = yeuCauRepository.findById(id);
-        if(optionalYeuCau.isPresent()){
+        if (optionalYeuCau.isPresent()) {
             return optionalYeuCau.get();
         }
         return null;

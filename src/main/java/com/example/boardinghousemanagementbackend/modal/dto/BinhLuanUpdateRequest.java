@@ -6,4 +6,7 @@ import lombok.Data;
 public class BinhLuanUpdateRequest {
     private Long id;
     private String content;
+
+    private long roomId;
+    private long accountId;
 }

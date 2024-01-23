@@ -3,6 +3,7 @@ package com.example.boardinghousemanagementbackend.modal.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Phong")
@@ -31,5 +32,11 @@ public class Phong {
 
     @Column(name = "imageUrl", length = 500)
     private String imageUrl;
+
+    @OneToMany(mappedBy = "room")
+    List<BinhLuan> binhLuans;
+
+    @OneToMany(mappedBy = "room")
+    List<DanhGia> danhGias;
 }
 

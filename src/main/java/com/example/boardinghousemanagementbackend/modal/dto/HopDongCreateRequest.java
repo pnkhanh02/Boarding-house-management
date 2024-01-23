@@ -7,7 +7,8 @@ import java.time.LocalDate;
 @Data
 public class HopDongCreateRequest {
     private String name;
-    private LocalDate deadline;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Integer numOfPeople;
     private long roomId;
 }

@@ -33,4 +33,8 @@ public class TaiKhoan {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private AccountStatus status;
+
+
 }
+
+

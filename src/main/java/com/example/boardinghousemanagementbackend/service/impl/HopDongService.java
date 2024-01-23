@@ -42,6 +42,11 @@ public class HopDongService implements IHopDongService {
     }
 
     @Override
+    public int getNumberOfHopDong() {
+        return hopDongRepository.findAll().size();
+    }
+
+    @Override
     public HopDong getById(Long id) {
         Optional<HopDong> optionalHopDong = hopDongRepository.findById(id);
         if(optionalHopDong.isPresent()){
@@ -59,7 +64,8 @@ public class HopDongService implements IHopDongService {
     public HopDong create(HopDongCreateRequest request) {
         HopDong hopDong = new HopDong();
         hopDong.setName(request.getName());
-        hopDong.setDeadline(request.getDeadline());
+        hopDong.setStartDate(request.getStartDate());
+        hopDong.setEndDate(request.getEndDate());
         hopDong.setNumOfPeople(request.getNumOfPeople());
         hopDong.setRoom(phongRepository.findById(request.getRoomId()));
         hopDongRepository.save(hopDong);
@@ -70,7 +76,8 @@ public class HopDongService implements IHopDongService {
     public HopDong update(HopDongUpdateRequest request) {
         HopDong hopDong = hopDongRepository.findById(request.getId());
         hopDong.setName(request.getName());
-        hopDong.setDeadline(request.getDeadline());
+        hopDong.setStartDate(request.getStartDate());
+        hopDong.setEndDate(request.getEndDate());
         hopDong.setNumOfPeople(request.getNumOfPeople());
         hopDong.setRoom(phongRepository.findById(request.getRoomId()));
         hopDongRepository.save(hopDong);

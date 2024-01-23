@@ -16,6 +16,8 @@ public interface IYeuCauService {
 
     Page<YeuCau> search(YeuCauSearchRequest request);
 
+    int getNumberOfYeuCau();
+
     YeuCau getById(Long id);
 
     void delete(long id);

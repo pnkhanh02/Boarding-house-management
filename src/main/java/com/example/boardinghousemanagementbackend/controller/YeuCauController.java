@@ -1,13 +1,11 @@
 package com.example.boardinghousemanagementbackend.controller;
 
-import com.example.boardinghousemanagementbackend.modal.dto.HopDongSearchRequest;
-import com.example.boardinghousemanagementbackend.modal.dto.YeuCauCreateRequest;
-import com.example.boardinghousemanagementbackend.modal.dto.YeuCauSearchRequest;
-import com.example.boardinghousemanagementbackend.modal.dto.YeuCauUpdateRequest;
+import com.example.boardinghousemanagementbackend.modal.dto.*;
 import com.example.boardinghousemanagementbackend.modal.entity.HopDong;
 import com.example.boardinghousemanagementbackend.modal.entity.YeuCau;
 import com.example.boardinghousemanagementbackend.service.IYeuCauService;
-import com.example.boardinghousemanagementbackend.service.impl.YeuCauService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -18,36 +16,48 @@ import java.util.List;
 @RequestMapping("/api/v1/yeucau")
 @CrossOrigin("*")
 public class YeuCauController {
+
+    @Autowired
+    ModelMapper modelMapper;
     @Autowired
     private IYeuCauService yeuCauService;
 
     @GetMapping("/getAll")
-    public List<YeuCau> getAll(){
-        return yeuCauService.getAll();
+    public List<YeuCau> getAll() {
+        return modelMapper.map(yeuCauService.getAll(), new TypeToken<List<YeuCauDTO>>(){
+
+        }.getType());
     }
 
     @PostMapping("/search")
-    public Page<YeuCau> search(@RequestBody YeuCauSearchRequest request){
-        return yeuCauService.search(request);
+    public List<YeuCauDTO> search(@RequestBody YeuCauSearchRequest request) {
+        List<YeuCau> yeuCaus = yeuCauService.search(request).getContent();
+        return modelMapper.map(yeuCaus, new TypeToken<List<YeuCauDTO>>() {
+        }.getType());
     }
 
     @GetMapping("/{id}")
-    public YeuCau getById(@PathVariable long id){
+    public YeuCau getById(@PathVariable long id) {
         return yeuCauService.getById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id){
+    public void delete(@PathVariable long id) {
         yeuCauService.delete(id);
     }
 
     @PostMapping("/create")
-    public YeuCau create(@RequestBody YeuCauCreateRequest request){
-        return yeuCauService.create(request);
+    public YeuCauDTO create(@RequestBody YeuCauCreateRequest request) {
+        return modelMapper.map(yeuCauService.create(request),YeuCauDTO.class);
     }
 
     @PutMapping("/update")
-    public YeuCau update(@RequestBody YeuCauUpdateRequest request){
-        return yeuCauService.update(request);
+    public YeuCauDTO update(@RequestBody YeuCauUpdateRequest request) {
+        return modelMapper.map(yeuCauService.update(request),YeuCauDTO.class);
+    }
+
+    @GetMapping(value = "size")
+    public int getNumberOfYeuCau() {
+        return yeuCauService.getNumberOfYeuCau();
     }
 }
